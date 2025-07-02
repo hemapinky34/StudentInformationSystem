@@ -37,7 +37,7 @@ Generation of custom reports and queries.
 
 Data validation and integrity checks through custom exceptions.
 
-🗃️ Database:
+Database:
 Database: SISDB
 
 Tables: Students, Courses, Enrollments, Teachers, Payments
