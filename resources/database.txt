@@ -1,0 +1,124 @@
+-- Create and use database
+DROP DATABASE IF EXISTS SISDB;
+CREATE DATABASE SISDB;
+USE SISDB;
+
+-- Create tables
+CREATE TABLE Students (
+    student_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    date_of_birth DATE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phone_number VARCHAR(15) NOT NULL
+);
+
+CREATE TABLE Teacher (
+    teacher_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL
+);
+
+CREATE TABLE Courses (
+    course_id INT AUTO_INCREMENT PRIMARY KEY,
+    course_name VARCHAR(100) NOT NULL,
+    credits INT NOT NULL,
+    teacher_id INT,
+    course_code VARCHAR(20) UNIQUE NOT NULL,
+    FOREIGN KEY (teacher_id) REFERENCES Teacher(teacher_id)
+);
+
+CREATE TABLE Enrollments (
+    enrollment_id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT NOT NULL,
+    course_id INT NOT NULL,
+    enrollment_date DATE NOT NULL,
+    FOREIGN KEY (student_id) REFERENCES Students(student_id),
+    FOREIGN KEY (course_id) REFERENCES Courses(course_id),
+    UNIQUE KEY unique_enrollment (student_id, course_id)
+);
+
+CREATE TABLE Payments (
+    payment_id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL,
+    payment_date DATE NOT NULL,
+    FOREIGN KEY (student_id) REFERENCES Students(student_id)
+);
+
+-- Insert Teachers (must come first due to foreign key constraints)
+INSERT INTO Teacher (first_name, last_name, email) VALUES
+('William', 'Taylor', 'william.t@example.com'),
+('Patricia', 'Anderson', 'patricia.a@example.com'),
+('Christopher', 'Thomas', 'christopher.t@example.com'),
+('Linda', 'Jackson', 'linda.j@example.com'),
+('Daniel', 'White', 'daniel.w@example.com'),
+('Elizabeth', 'Harris', 'elizabeth.h@example.com'),
+('Matthew', 'Martin', 'matthew.m@example.com'),
+('Susan', 'Thompson', 'susan.t@example.com'),
+('Andrew', 'Garcia', 'andrew.g@example.com'),
+('Karen', 'Martinez', 'karen.m@example.com');
+
+-- Insert Students
+INSERT INTO Students (first_name, last_name, date_of_birth, email, phone_number) VALUES
+('John', 'Smith', '2000-05-15', 'john.smith@example.com', '555-0101'),
+('Emily', 'Johnson', '2001-02-20', 'emily.j@example.com', '555-0102'),
+('Michael', 'Williams', '1999-11-03', 'michael.w@example.com', '555-0103'),
+('Sarah', 'Brown', '2002-07-22', 'sarah.b@example.com', '555-0104'),
+('David', 'Jones', '2001-04-18', 'david.j@example.com', '555-0105'),
+('Jennifer', 'Garcia', '2000-09-30', 'jennifer.g@example.com', '555-0106'),
+('Robert', 'Miller', '2002-01-25', 'robert.m@example.com', '555-0107'),
+('Lisa', 'Davis', '2001-08-12', 'lisa.d@example.com', '555-0108'),
+('James', 'Rodriguez', '1999-12-05', 'james.r@example.com', '555-0109'),
+('Jessica', 'Martinez', '2000-03-28', 'jessica.m@example.com', '555-0110');
+
+-- Insert Courses
+INSERT INTO Courses (course_name, credits, teacher_id, course_code) VALUES
+('Introduction to Programming', 3, 1, 'CS101'),
+('Database Systems', 4, 2, 'CS202'),
+('Calculus I', 4, 3, 'MATH101'),
+('Web Development', 3, 4, 'CS301'),
+('Data Structures', 4, 5, 'CS203'),
+('Computer Networks', 3, 6, 'CS302'),
+('Linear Algebra', 3, 7, 'MATH202'),
+('Software Engineering', 4, 8, 'CS401'),
+('Artificial Intelligence', 4, 9, 'CS402'),
+('Operating Systems', 3, 10, 'CS303');
+
+-- Insert Enrollments
+INSERT INTO Enrollments (student_id, course_id, enrollment_date) VALUES
+(1, 1, '2023-09-01'),
+(1, 3, '2023-09-01'),
+(2, 2, '2023-09-01'),
+(3, 1, '2023-09-01'),
+(3, 5, '2023-09-01'),
+(4, 4, '2023-09-01'),
+(5, 6, '2023-09-01'),
+(6, 7, '2023-09-01'),
+(7, 8, '2023-09-01'),
+(8, 9, '2023-09-01');
+
+-- Insert Payments
+INSERT INTO Payments (student_id, amount, payment_date) VALUES
+(1, 500.00, '2023-08-15'),
+(2, 500.00, '2023-08-16'),
+(3, 750.00, '2023-08-17'),
+(4, 500.00, '2023-08-18'),
+(5, 600.00, '2023-08-19'),
+(6, 550.00, '2023-08-20'),
+(7, 700.00, '2023-08-21'),
+(8, 500.00, '2023-08-22'),
+(9, 650.00, '2023-08-23'),
+(10, 500.00, '2023-08-24');
+
+-- Verification queries
+SELECT 'Students' AS table_name, COUNT(*) AS record_count FROM Students
+UNION ALL
+SELECT 'Teacher', COUNT(*) FROM Teacher
+UNION ALL
+SELECT 'Courses', COUNT(*) FROM Courses
+UNION ALL
+SELECT 'Enrollments', COUNT(*) FROM Enrollments
+UNION ALL
+SELECT 'Payments', COUNT(*) FROM Payments;
