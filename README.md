@@ -1,4 +1,4 @@
-his is a  Student Information System (SIS) project developed using Python (OOP) and MySQL, following Hexaware's structured guidelines. It manages students, courses, enrollments, teachers, and payments with a complete back-end database and object-oriented implementation.
+This is a  Student Information System (SIS) project developed using Python (OOP) and MySQL. It manages students, courses, enrollments, teachers, and payments with a complete back-end database and object-oriented implementation.
 
 Features Implemented:
 Entity Layer: Defined domain classes (Student, Course, Teacher, Enrollment, Payment) with constructors and methods to model real-world entities.
